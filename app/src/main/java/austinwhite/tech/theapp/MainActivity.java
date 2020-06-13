@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mrefresh.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 finish();
