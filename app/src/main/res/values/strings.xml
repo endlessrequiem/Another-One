@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Another One</string>
+    <string name="pressed">You pressed the Button </string>
+    <string name="times"> times</string>
+    <string name="time"> time</string>
+    <string name="button">Another one</string>
+    <string name="refresh">Start Over</string>
+</resources>
