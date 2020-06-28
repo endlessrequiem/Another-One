@@ -2,9 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginBottom="340dp"
+        android:text="@string/pressStart"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/refresh"
@@ -15,6 +33,7 @@
         android:layout_marginEnd="153dp"
         android:layout_marginBottom="207dp"
         android:text="@string/refresh"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,18 +48,81 @@
         android:layout_marginEnd="162dp"
         android:layout_marginBottom="276dp"
         android:text="@string/button"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/YouPressedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="199dp"
+        android:layout_marginTop="210dp"
+        android:layout_marginEnd="212dp"
+        android:layout_marginBottom="521dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/easy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/easy" />
+
+        <RadioButton
+            android:id="@+id/medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/medium" />
+
+        <RadioButton
+            android:id="@+id/hard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hard" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/startGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginBottom="92dp"
+        android:text="@string/startGame"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="174dp"
+        android:layout_marginBottom="37dp"
+        android:text="@string/timer"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instructions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

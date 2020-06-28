@@ -4,5 +4,15 @@
     <string name="times"> times</string>
     <string name="time"> time</string>
     <string name="button">Another one</string>
-    <string name="refresh">Start Over</string>
+    <string name="refresh">New Game</string>
+    <string name="your_number">Reach: </string>
+    <string name="pressStart">Press start to go!</string>
+    <string name="goalreached">You Win!</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="startGame">Start</string>
+    <string name="setDifficulty">Set Difficulty</string>
+    <string name="timer">Timer</string>
+    <string name="youLose">You Lose</string>
 </resources>
