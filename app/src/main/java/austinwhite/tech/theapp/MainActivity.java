@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 int numrange = 1;
                 int min = 1;
                 int time = 1;
-                
+
                 if (easy.isChecked()) {
                     numrange = 100;
                     min = 1;
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     final CountDownTimer countDown = new CountDownTimer(time, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            timer.setText("seconds remaining: " + millisUntilFinished / 1000);
+                            timer.setText(String.valueOf(millisUntilFinished / 1000));
                             //here you can have your logic to set text to edittext
                         }
 
