@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
                         public void onTick(long millisUntilFinished) {
                             timer.setText(String.valueOf(millisUntilFinished / 1000));
-                            //here you can have your logic to set text to edittext
                         }
 
                         public void onFinish() {
