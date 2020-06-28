@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 int numrange = 1;
                 int min = 1;
                 int time = 1;
+                
                 if (easy.isChecked()) {
                     numrange = 100;
                     min = 1;
