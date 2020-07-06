@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     mButton.setEnabled(true);
 
                 } else if (medium.isChecked()) {
-                    numrange = 500;
+                    numrange = 200;
                     min = 100;
                     time = 45000;
                     hard.setEnabled(false);
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 } else if (hard.isChecked()) {
-                    numrange = 1000;
-                    min = 500;
+                    numrange = 300;
+                    min = 200;
                     time = 60000;
                     easy.setEnabled(false);
                     medium.setEnabled(false);
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     final TextView mTxt = findViewById(R.id.YouPressedText);
                     final int[] a = {1};
 
+
                     final CountDownTimer countDown = new CountDownTimer(time, 1000) {
 
                         public void onTick(long millisUntilFinished) {
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     }.start();
+
                     startGame.setEnabled(false);
 
 
@@ -129,9 +131,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
 
 }
