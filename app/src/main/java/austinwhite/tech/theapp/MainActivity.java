@@ -12,8 +12,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
@@ -34,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         final TextView instructions = findViewById(R.id.instructions);
         final TextView timer = findViewById(R.id.timer);
         final TextView cycles = findViewById(R.id.cyclesView);
+        final TextView anotherPress = findViewById(R.id.clicks);
+
 
         final RadioButton easy = findViewById(R.id.easy);
         final RadioButton medium = findViewById(R.id.medium);
@@ -42,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int numrange = 1;
+                int max = 1;
                 int min = 1;
                 int time = 1;
 
-                gameSet(numrange,
+
+
+                gameSet(max,
                         min,
                         time,
                         cyclesArr,
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                         anotherOne,
                         instructions,
                         timer,
-                        cycles
+                        cycles,
+                        anotherPress
                 );
 
 
@@ -68,49 +71,60 @@ public class MainActivity extends AppCompatActivity {
 
 
     @SuppressLint("SetTextI18n")
-    private void gameSet(int numrange, int min, int time, final int[] cyclesArr,
+    private void gameSet(int max, int min, int time, final int[] cyclesArr,
                          final RadioButton easy, final RadioButton medium, final RadioButton hard,
                          final Button refresh, final Button startGame, final Button anotherOne,
-                         final TextView instructions, final TextView timer, final TextView cycles) {
+                         final TextView instructions, final TextView timer, final TextView cycles, final TextView anotherPress) {
 
 
 
         if (easy.isChecked()) {
-            numrange = 100;
+            max = 100;
             min = 1;
             time = 30000;
             medium.setEnabled(false);
             hard.setEnabled(false);
             anotherOne.setEnabled(true);
+            easy.setVisibility(View.GONE);
+            medium.setVisibility(View.GONE);
+            hard.setVisibility(View.GONE);
+            startGame.setVisibility(View.GONE);
 
         } else if (medium.isChecked()) {
-            numrange = 200;
+            max = 200;
             min = 100;
             time = 45000;
             hard.setEnabled(false);
             easy.setEnabled(false);
             anotherOne.setEnabled(true);
+            easy.setVisibility(View.GONE);
+            medium.setVisibility(View.GONE);
+            hard.setVisibility(View.GONE);
+            startGame.setVisibility(View.GONE);
 
 
         } else if (hard.isChecked()) {
-            numrange = 300;
+            max = 300;
             min = 200;
             time = 60000;
             easy.setEnabled(false);
             medium.setEnabled(false);
             anotherOne.setEnabled(true);
+            easy.setVisibility(View.GONE);
+            medium.setVisibility(View.GONE);
+            hard.setVisibility(View.GONE);
+            startGame.setVisibility(View.GONE);
 
         } else {
             Toast.makeText(this, getString(R.string.setDifficulty), Toast.LENGTH_SHORT).show();
 
         }
 
-            if (numrange > 1) {
-                final int randnumber = ThreadLocalRandom.current().nextInt(min, numrange + 1);
+            if (max > 1) {
+                final int randnumber = (int) ((Math.random() * (max - min)) + min);
                 instructions.setText(getString(R.string.your_number) + " " + randnumber);
 
 
-                final TextView mTxt = findViewById(R.id.YouPressedText);
                 final int[] score = {1};
 
 
@@ -122,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     public void onFinish() {
-                        mTxt.setText(getString(R.string.youLose));
+                        anotherPress.setText(getString(R.string.youLose));
                         anotherOne.setEnabled(false);
                         refresh.setEnabled(true);
                         easy.setEnabled(false);
@@ -134,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
                 startGame.setEnabled(false);
 
-                final int finalNumrange = numrange;
+                final int finalMax = max;
                 final int finalMin = min;
                 final int finalTime = time;
 
@@ -145,8 +159,10 @@ public class MainActivity extends AppCompatActivity {
                         int i = score[0]++;
                         if (i == randnumber) {
                             countDown.cancel();
+                            anotherPress.setText(String.valueOf(i));
                             anotherOne.setEnabled(false);
-                            gameSet(finalNumrange,
+                            refresh.setEnabled(true);
+                            gameSet(finalMax,
                                     finalMin,
                                     finalTime,
                                     cyclesArr,
@@ -158,14 +174,13 @@ public class MainActivity extends AppCompatActivity {
                                     anotherOne,
                                     instructions,
                                     timer,
-                                    cycles
-
-                            );
+                                    cycles,
+                                    anotherPress);
                             cycleCounter(cycles, cyclesArr);
 
 
                         } else {
-                            mTxt.setText(String.valueOf(i));
+                            anotherPress.setText(String.valueOf(i));
                         }
                     }
                 });
