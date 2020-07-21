@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -99,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
             anotherOne.setEnabled(true);
 
         } else {
-            instructions.setText(getString(R.string.setDifficulty));
+            Toast.makeText(this, getString(R.string.setDifficulty), Toast.LENGTH_SHORT).show();
+
         }
 
             if (numrange > 1) {
@@ -143,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                         if (i == randnumber) {
                             countDown.cancel();
                             anotherOne.setEnabled(false);
-                            refresh.setEnabled(true);
                             gameSet(finalNumrange,
                                     finalMin,
                                     finalTime,
@@ -169,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
             } else {
-                instructions.setText(getString(R.string.setDifficulty));
+                Log.i("Debug Check", "Else Statement from anotherOne.onClickListener"); //for debug purposes
 
             }
 
