@@ -43,87 +43,118 @@ public class MainActivity extends AppCompatActivity {
                 int min = 1;
                 int time = 1;
 
-                if (easy.isChecked()) {
-                    numrange = 100;
-                    min = 1;
-                    time = 30000;
-                    medium.setEnabled(false);
-                    hard.setEnabled(false);
-                    anotherOne.setEnabled(true);
+                gameSet(numrange,
+                        min,
+                        time,
+                        easy,
+                        medium,
+                        hard,
+                        refresh,
+                        startGame,
+                        anotherOne,
+                        instructions,
+                        timer
+                );
 
-                } else if (medium.isChecked()) {
-                    numrange = 200;
-                    min = 100;
-                    time = 45000;
-                    hard.setEnabled(false);
-                    easy.setEnabled(false);
-                    anotherOne.setEnabled(true);
-
-
-                } else if (hard.isChecked()) {
-                    numrange = 300;
-                    min = 200;
-                    time = 60000;
-                    easy.setEnabled(false);
-                    medium.setEnabled(false);
-                    anotherOne.setEnabled(true);
-
-                } else {
-                    instructions.setText(getString(R.string.setDifficulty));
-                }
-
-                if (numrange > 1) {
-                    final int randnumber = ThreadLocalRandom.current().nextInt(min, numrange + 1);
-                    instructions.setText(getString(R.string.your_number) + " " + randnumber);
-
-
-                    final TextView mTxt = findViewById(R.id.YouPressedText);
-                    final int[] a = {1};
-
-
-                    final CountDownTimer countDown = new CountDownTimer(time, 1000) {
-
-                        public void onTick(long millisUntilFinished) {
-                            timer.setText(String.valueOf(millisUntilFinished / 1000));
-                        }
-
-                        public void onFinish() {
-                            mTxt.setText(getString(R.string.youLose));
-                            anotherOne.setEnabled(false);
-                            refresh.setEnabled(true);
-
-                        }
-
-                    }.start();
-
-                    startGame.setEnabled(false);
-
-
-                    anotherOne.setOnClickListener(new View.OnClickListener() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onClick(View view) {
-                            int i = a[0]++;
-                            if (i == randnumber) {
-                                mTxt.setText(getString(R.string.goalreached));
-                                countDown.cancel();
-                                anotherOne.setEnabled(false);
-                                refresh.setEnabled(true);
-
-                            } else {
-                                mTxt.setText(String.valueOf(i));
-                            }
-                        }
-                    });
-
-                } else {
-                    instructions.setText(getString(R.string.setDifficulty));
-
-                }
 
             }
         });
+    }
 
+
+    @SuppressLint("SetTextI18n")
+    private void gameSet(int numrange, int min, int time, final RadioButton easy, final RadioButton medium, final RadioButton hard, final Button refresh, final Button startGame, final Button anotherOne, final TextView instructions, final TextView timer) {
+        if (easy.isChecked()) {
+            numrange = 100;
+            min = 1;
+            time = 30000;
+            medium.setEnabled(false);
+            hard.setEnabled(false);
+            anotherOne.setEnabled(true);
+
+        } else if (medium.isChecked()) {
+            numrange = 200;
+            min = 100;
+            time = 45000;
+            hard.setEnabled(false);
+            easy.setEnabled(false);
+            anotherOne.setEnabled(true);
+
+
+        } else if (hard.isChecked()) {
+            numrange = 300;
+            min = 200;
+            time = 60000;
+            easy.setEnabled(false);
+            medium.setEnabled(false);
+            anotherOne.setEnabled(true);
+
+        } else {
+            instructions.setText(getString(R.string.setDifficulty));
+        }
+
+            if (numrange > 1) {
+                final int randnumber = ThreadLocalRandom.current().nextInt(min, numrange + 1);
+                instructions.setText(getString(R.string.your_number) + " " + randnumber);
+
+
+                final TextView mTxt = findViewById(R.id.YouPressedText);
+                final int[] a = {1};
+
+
+                final CountDownTimer countDown = new CountDownTimer(time, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        timer.setText(String.valueOf(millisUntilFinished / 1000));
+                    }
+
+                    public void onFinish() {
+                        mTxt.setText(getString(R.string.youLose));
+                        anotherOne.setEnabled(false);
+                        refresh.setEnabled(true);
+
+                    }
+
+                }.start();
+
+                startGame.setEnabled(false);
+
+
+                final int finalNumrange = numrange;
+                final int finalMin = min;
+                final int finalTime = time;
+                anotherOne.setOnClickListener(new View.OnClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onClick(View view) {
+                        int i = a[0]++;
+                        if (i == randnumber) {
+                            countDown.cancel();
+                            anotherOne.setEnabled(false);
+                            refresh.setEnabled(true);
+                            gameSet(finalNumrange,
+                                    finalMin,
+                                    finalTime,
+                                    easy,
+                                    medium,
+                                    hard,
+                                    refresh,
+                                    startGame,
+                                    anotherOne,
+                                    instructions,
+                                    timer
+                            );
+
+                        } else {
+                            mTxt.setText(String.valueOf(i));
+                        }
+                    }
+                });
+
+            } else {
+                instructions.setText(getString(R.string.setDifficulty));
+
+            }
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,8 +162,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        }
 
-    }
     public void restart() {
         finish();
         startActivity(getIntent());
