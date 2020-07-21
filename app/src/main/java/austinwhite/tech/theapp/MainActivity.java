@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 int min = 1;
                 int time = 1;
 
-
-
                 gameSet(max,
                         min,
                         time,
