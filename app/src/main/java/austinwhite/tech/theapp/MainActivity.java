@@ -21,10 +21,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button mrefresh = findViewById(R.id.refresh);
+        final Button refresh = findViewById(R.id.refresh);
         final Button startGame = findViewById(R.id.startGame);
-        final Button mButton = findViewById(R.id.button);
-        mButton.setEnabled(false);
+        final Button anotherOne = findViewById(R.id.anotherOne);
+        anotherOne.setEnabled(false);
+        refresh.setEnabled(false);
+
 
 
         final TextView instructions = findViewById(R.id.instructions);
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     time = 30000;
                     medium.setEnabled(false);
                     hard.setEnabled(false);
-                    mButton.setEnabled(true);
+                    anotherOne.setEnabled(true);
 
                 } else if (medium.isChecked()) {
                     numrange = 200;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     time = 45000;
                     hard.setEnabled(false);
                     easy.setEnabled(false);
-                    mButton.setEnabled(true);
+                    anotherOne.setEnabled(true);
 
 
                 } else if (hard.isChecked()) {
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     time = 60000;
                     easy.setEnabled(false);
                     medium.setEnabled(false);
-                    mButton.setEnabled(true);
+                    anotherOne.setEnabled(true);
 
                 } else {
                     instructions.setText(getString(R.string.setDifficulty));
@@ -87,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
                         public void onFinish() {
                             mTxt.setText(getString(R.string.youLose));
-                            mButton.setEnabled(false);
+                            anotherOne.setEnabled(false);
+                            refresh.setEnabled(true);
 
                         }
 
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     startGame.setEnabled(false);
 
 
-                    mButton.setOnClickListener(new View.OnClickListener() {
+                    anotherOne.setOnClickListener(new View.OnClickListener() {
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onClick(View view) {
@@ -104,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
                             if (i == randnumber) {
                                 mTxt.setText(getString(R.string.goalreached));
                                 countDown.cancel();
-                                mButton.setEnabled(false);
+                                anotherOne.setEnabled(false);
+                                refresh.setEnabled(true);
+
                             } else {
                                 mTxt.setText(String.valueOf(i));
                             }
@@ -119,17 +124,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mrefresh.setOnClickListener(new View.OnClickListener() {
+        refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
+                restart();
             }
         });
 
 
+    }
+    public void restart() {
+        finish();
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
     }
 
 }
