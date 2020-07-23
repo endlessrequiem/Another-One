@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         final Button startGame = findViewById(R.id.startGame);
         final Button anotherOne = findViewById(R.id.anotherOne);
 
+        final int[] cyclesArr = {1};
+
+
         anotherOne.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
 
@@ -43,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
                         time,
                         anotherOne,
                         refresh,
-                        startGame
+                        startGame,
+                        cyclesArr
                 );
 
 
@@ -53,11 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @SuppressLint("SetTextI18n")
-    private void gameSet(int max, int min, int time, final Button anotherOne, final Button refresh, final Button startGame) {
-
-
-        final int[] cyclesArr = {1};
-
+    private void gameSet(int max, int min, int time, final Button anotherOne, final Button refresh, final Button startGame, final int[] cyclesArr) {
 
         final TextView instructions = findViewById(R.id.instructions);
         final TextView timer = findViewById(R.id.timer);
@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 final int[] score = {1};
 
 
-
                 final CountDownTimer countDown = new CountDownTimer(time, 1000) {
 
                     public void onTick(long millisUntilFinished) {
@@ -148,21 +147,25 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         int i = score[0]++;
+
                         if (i == randnumber) {
                             countDown.cancel();
                             anotherPress.setText(String.valueOf(i));
                             anotherOne.setEnabled(false);
+
                             gameSet(finalMax,
                                     finalMin,
                                     finalTime,
                                     anotherOne,
                                     refresh,
-                                    startGame);
-                            cycleCounter(cycles, cyclesArr);
-
+                                    startGame,
+                                    cyclesArr);
+                            int round = cyclesArr[0]++;
+                            cycles.setText(getString(R.string.cycle) + " " + round);
 
                         } else {
                             anotherPress.setText(String.valueOf(i));
+
                         }
                     }
                 });
@@ -180,12 +183,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         }
-
-    @SuppressLint("SetTextI18n")
-    private void cycleCounter(TextView cycles, int[] cyclesArr) {
-        int counterCycle = cyclesArr[0]++;
-        cycles.setText(getString(R.string.cycle) + " " + counterCycle);
-    }
 
     public void restart() {
         finish();
