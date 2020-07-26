@@ -177,6 +177,8 @@
         android:fontFamily="@font/waiting_for_the_sunrise"
         android:text="@string/app_name"
         android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#000000"
         android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
