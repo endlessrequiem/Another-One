@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         final Button startGame = findViewById(R.id.startGame);
         final Button anotherOne = findViewById(R.id.anotherOne);
 
+        final TextView title = findViewById(R.id.appName);
+
         final int[] cyclesArr = {1};
 
 
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 anotherOne.setVisibility(View.VISIBLE);
                 refresh.setVisibility(View.VISIBLE);
                 refresh.setEnabled(false);
+                title.setVisibility(View.GONE);
                 int max = 1;
                 int min = 1;
                 int time = 1;
