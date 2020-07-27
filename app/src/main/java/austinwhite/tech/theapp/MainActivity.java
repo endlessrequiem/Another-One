@@ -2,6 +2,8 @@ package austinwhite.tech.theapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,11 +16,14 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final AnimateActivity animateThis = new AnimateActivity();
 
         final Button refresh = findViewById(R.id.refresh);
         final Button startGame = findViewById(R.id.startGame);
@@ -50,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
                         anotherOne,
                         refresh,
                         startGame,
-                        cyclesArr
+                        cyclesArr,
+                        animateThis
                 );
 
 
@@ -60,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @SuppressLint("SetTextI18n")
-    private void gameSet(int max, int min, int time, final Button anotherOne, final Button refresh, final Button startGame, final int[] cyclesArr) {
+    private void gameSet(int max, int min, int time, final Button anotherOne, final Button refresh, final Button startGame, final int[] cyclesArr, final AnimateActivity animateThis) {
 
         final TextView instructions = findViewById(R.id.instructions);
         final TextView timer = findViewById(R.id.timer);
@@ -114,83 +120,88 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-            if (max > 1) {
-                final int randnumber = (int) ((Math.random() * (max - min)) + min);
-                instructions.setText(getString(R.string.your_number) + " " + randnumber);
+        if (max > 1) {
+            final int randnumber = (int) ((Math.random() * (max - min)) + min);
+            instructions.setText(getString(R.string.your_number) + " " + randnumber);
 
 
-                final int[] score = {1};
+            final int[] score = {1};
 
 
-                final CountDownTimer countDown = new CountDownTimer(time, 1000) {
+            final CountDownTimer countDown = new CountDownTimer(time, 1000) {
 
-                    public void onTick(long millisUntilFinished) {
-                        timer.setText(String.valueOf(millisUntilFinished / 1000));
-                    }
+                public void onTick(long millisUntilFinished) {
+                    timer.setText(String.valueOf(millisUntilFinished / 1000));
+                    animateThis.scaler(timer);
+                }
 
-                    public void onFinish() {
-                        anotherPress.setText(getString(R.string.youLose));
+                public void onFinish() {
+                    anotherPress.setText(getString(R.string.youLose));
+                    animateThis.scaler(anotherPress);
+                    anotherOne.setEnabled(false);
+                    refresh.setEnabled(true);
+                    easy.setEnabled(false);
+                    medium.setEnabled(false);
+                    hard.setEnabled(false);
+                }
+
+            }.start();
+
+            startGame.setEnabled(false);
+
+
+            final int finalMax = max;
+            final int finalMin = min;
+            final int finalTime = time;
+            anotherOne.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onClick(View view) {
+                    int i = score[0]++;
+
+                    if (i == randnumber) {
+                        countDown.cancel();
+                        anotherPress.setText(String.valueOf(i));
                         anotherOne.setEnabled(false);
-                        refresh.setEnabled(true);
-                        easy.setEnabled(false);
-                        medium.setEnabled(false);
-                        hard.setEnabled(false);
+                        animateThis.scaler(anotherPress);
+                        gameSet(finalMax,
+                                finalMin,
+                                finalTime,
+                                anotherOne,
+                                refresh,
+                                startGame,
+                                cyclesArr,
+                                animateThis);
+                        int round = cyclesArr[0]++;
+                        cycles.setText(getString(R.string.cycle) + " " + round);
+                        animateThis.scaler(cycles);
+
+                    } else {
+                        anotherPress.setText(String.valueOf(i));
+
                     }
+                }
+            });
 
-                }.start();
+        } else {
+            Log.i("Debug Check", "Else Statement from anotherOne.onClickListener"); //for debug purposes
 
-                startGame.setEnabled(false);
-
-
-                final int finalMax = max;
-                final int finalMin = min;
-                final int finalTime = time;
-                anotherOne.setOnClickListener(new View.OnClickListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onClick(View view) {
-                        int i = score[0]++;
-
-                        if (i == randnumber) {
-                            countDown.cancel();
-                            anotherPress.setText(String.valueOf(i));
-                            anotherOne.setEnabled(false);
-
-                            gameSet(finalMax,
-                                    finalMin,
-                                    finalTime,
-                                    anotherOne,
-                                    refresh,
-                                    startGame,
-                                    cyclesArr);
-                            int round = cyclesArr[0]++;
-                            cycles.setText(getString(R.string.cycle) + " " + round);
-
-                        } else {
-                            anotherPress.setText(String.valueOf(i));
-
-                        }
-                    }
-                });
-
-            } else {
-                Log.i("Debug Check", "Else Statement from anotherOne.onClickListener"); //for debug purposes
-
-            }
+        }
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                animateThis.scaler(refresh);
                 restart();
             }
         });
 
-        }
+    }
+
 
     public void restart() {
         finish();
         startActivity(getIntent());
         overridePendingTransition(0, 0);
     }
-
 }
